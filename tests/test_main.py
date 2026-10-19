@@ -168,15 +168,10 @@ class TestSalesValidation(unittest.TestCase):
         self.assertIn("product", printed_output)
         self.assertIn("unit_price", printed_output)
 
-if __name__ == "__main__":
-    unittest.main()
 
-    def test_missing_required_columns_are_reported(self):
-        with self.csv_file.open(
-            "w", newline="", encoding="utf-8"
-        ) as file:
-            writer = csv.writer(file)
-            writer.writerow(["order_id", "date", "quantity"])
+    def test_empty_csv_is_reported(self):
+        with self.csv_file.open("w", encoding="utf-8"):
+            pass
 
         with patch("builtins.print") as mocked_print:
             main.process_sales()
@@ -184,7 +179,10 @@ if __name__ == "__main__":
         printed_output = " ".join(
             str(call) for call in mocked_print.call_args_list
         )
-        self.assertIn("Missing columns", printed_output)
-        self.assertIn("product", printed_output)
-        self.assertIn("unit_price", printed_output)
+        self.assertIn(
+            "CSV file is empty or has no header",
+            printed_output
+        )
+if __name__ == "__main__":
+    unittest.main()
 
