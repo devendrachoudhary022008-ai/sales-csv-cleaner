@@ -158,7 +158,23 @@ class TestSalesValidation(unittest.TestCase):
                     "finite number",
                     rejected[0]["rejection_reason"]
                 )
+    def test_output_write_error_is_handled(self):
+        with patch.object(
+            main, "process_sales",
+            side_effect=OSError("Permission denied")
+        ):
+            with patch("builtins.print") as mocked_print:
+                main.main()
 
+        printed_output = " ".join(
+            str(call) for call in mocked_print.call_args_list
+        )
+        self.assertIn(
+            "ERROR: Could not create or write output files",
+            printed_output,
+        )
+        self.assertIn("Permission denied", printed_output)
+    
 
     def test_decimal_quantity_is_rejected(self):
         rows = [{
@@ -204,6 +220,4 @@ class TestSalesValidation(unittest.TestCase):
             "CSV file is empty or has no header",
             printed_output
         )
-if __name__ == "__main__":
-    unittest.main()
 

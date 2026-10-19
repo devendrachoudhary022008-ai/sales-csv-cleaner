@@ -247,8 +247,13 @@ def process_sales():
     print("- daily_sales_report.csv")
 
 
-if __name__ == "__main__":
+
+def main():
     try:
         process_sales()
     except OSError as error:
         print(f"ERROR: Could not create or write output files: {error}")
+
+
+if __name__ == "__main__":
+    main()
