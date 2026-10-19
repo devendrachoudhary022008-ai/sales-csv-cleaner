@@ -4,3 +4,5 @@ venv/
 output/
 main_backup.py
 data/sales.xlsx
+
+main_day5_backup.py

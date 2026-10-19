@@ -249,4 +249,7 @@ def process_sales():
 
 
 if __name__ == "__main__":
-    process_sales()
+    try:
+        process_sales()
+    except OSError as error:
+        print(f"ERROR: Could not create or write output files: {error}")
