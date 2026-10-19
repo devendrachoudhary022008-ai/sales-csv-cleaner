@@ -1,5 +1,6 @@
 
 import csv
+import logging
 from pathlib import Path
 from datetime import date, datetime
 from collections import defaultdict
@@ -22,8 +23,17 @@ REQUIRED_COLUMNS = [
 ]
 
 CLEAN_COLUMNS = REQUIRED_COLUMNS + ["total"]
+# Logging configuration
+OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
+LOG_FILE = OUTPUT_DIR / "sales_cleaner.log"
 
-
+logging.basicConfig(
+    filename=LOG_FILE,
+    level=logging.INFO,
+    format="%(asctime)s - %(levelname)s - %(message)s",
+    encoding="utf-8",
+)
+    
 def clean_text(value):
     """Normalize text, dates, and spreadsheet cell values."""
     if value is None:
@@ -248,12 +258,15 @@ def process_sales():
 
 
 
+
 def main():
+    logging.info("Sales CSV Cleaner started")
+
     try:
         process_sales()
+        logging.info("Sales processing completed successfully")
     except OSError as error:
+        logging.exception("Could not create or write output files")
         print(f"ERROR: Could not create or write output files: {error}")
-
-
 if __name__ == "__main__":
     main()
