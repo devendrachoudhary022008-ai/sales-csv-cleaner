@@ -2,3 +2,5 @@ __pycache__/
 .venv/
 venv/
 output/
+main_backup.py
+data/sales.xlsx

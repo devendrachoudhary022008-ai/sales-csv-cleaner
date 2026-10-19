@@ -1,55 +1,49 @@
-# Sales CSV Cleaner
+﻿# Sales Data Cleaner
 
-A beginner-friendly Python automation project that cleans sales CSV data, detects invalid and duplicate records, and generates useful reports.
+A Python automation tool that cleans sales data from CSV and Excel files, validates records, detects duplicates, and generates sales reports.
 
 ## Features
 
-- Reads sales data from a CSV file.
-- Removes unnecessary spaces from values.
-- Validates dates, quantities, prices, and required fields.
+- Reads CSV (data/sales.csv) or Excel (data/sales.xlsx) input.
+- Prioritizes CSV when both input files exist.
+- Trims unnecessary spaces and validates required fields, dates, quantities, and prices.
 - Detects duplicate sales records.
-- Calculates total sales for each valid record.
-- Exports rejected records with rejection reasons.
+- Calculates sales totals and exports rejected records with reasons.
 - Generates a daily sales summary.
-
-## Project Structure
-
-```text
-sales-csv-cleaner/
-├── main.py
-├── data/
-│   └── sales.csv
-├── output/
-│   ├── cleaned_sales.csv
-│   ├── rejected_rows.csv
-│   └── daily_sales_report.csv
-└── README.md
-```
 
 ## Requirements
 
 - Python 3
-- No third-party Python packages required.
+- openpyxl 3.1.5 or newer
+
+## Installation
+
+Install the dependency:
+
+```powershell
+py -m pip install -r requirements.txt
+```
 
 ## How to Run
 
-1. Download or clone this repository.
-2. Open the project folder in a terminal.
-3. Place your input CSV at `data/sales.csv`.
-4. Run:
+1. Put your input file in the data/ folder.
+2. Ensure the first row contains these headers: order_id, date, product, quantity, unit_price.
+3. Run:
 
-```bash
-python main.py
+```powershell
+py main.py
 ```
 
-The generated reports will appear in the `output/` directory.
+If both input files exist, CSV is used first. Excel is used when the CSV file is absent.
 
 ## Output Files
 
-- `cleaned_sales.csv` — validated sales records with calculated totals.
-- `rejected_rows.csv` — rejected records and their rejection reasons.
-- `daily_sales_report.csv` — date-wise sales totals and valid order counts.
+Reports are saved in output/:
+
+- cleaned_sales.csv - Validated records with calculated totals.
+- ejected_rows.csv - Rejected records and their reasons.
+- daily_sales_report.csv - Daily sales totals and valid order counts.
 
 ## Learning Goals
 
-This project demonstrates Python functions, CSV processing, file handling, validation, exception handling, and automated report generation.
+This project demonstrates Python functions, CSV processing, Excel handling, data validation, duplicate detection, file operations, and automated report generation.
