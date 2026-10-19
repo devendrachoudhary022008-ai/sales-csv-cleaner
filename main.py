@@ -163,12 +163,11 @@ def process_sales():
             if quantity <= 0:
                 raise ValueError("Quantity must be greater than 0")
 
-            if unit_price < 0:
-                raise ValueError("Unit price cannot be negative")
-
             if not (float("-inf") < unit_price < float("inf")):
                 raise ValueError("Unit price must be a finite number")
 
+            if unit_price < 0:
+                raise ValueError("Unit price cannot be negative")
             record_key = (
                 order_id, sale_date, product, quantity, unit_price
             )

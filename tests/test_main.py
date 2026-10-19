@@ -139,6 +139,27 @@ class TestSalesValidation(unittest.TestCase):
         self.assertIn("Unit price cannot be negative",
                       rejected[0]["rejection_reason"])
 
+    def test_non_finite_unit_prices_are_rejected(self):
+        for price in ["NaN", "inf", "-inf"]:
+            with self.subTest(price=price):
+                rows = [{
+                    "order_id": "A008",
+                    "date": "2026-10-19",
+                    "product": "Keyboard",
+                    "quantity": "1",
+                    "unit_price": price,
+                }]
+
+                cleaned, rejected = self.run_sales(rows)
+
+                self.assertEqual(len(cleaned), 0)
+                self.assertEqual(len(rejected), 1)
+                self.assertIn(
+                    "finite number",
+                    rejected[0]["rejection_reason"]
+                )
+
+
     def test_decimal_quantity_is_rejected(self):
         rows = [{
             "order_id": "A007", "date": "2026-10-19",
